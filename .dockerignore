@@ -1,0 +1,6 @@
+# Ignore the files/folders
+.git
+*cache*
+*model*
+.dockerignore
+Dockerfile
