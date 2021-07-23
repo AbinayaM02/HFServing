@@ -1,0 +1,4 @@
+transformers==4.6.1
+flask
+gunicorn
+docker
