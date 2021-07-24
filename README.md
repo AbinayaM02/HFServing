@@ -53,29 +53,30 @@ Change the name of the model directory in "download_python.py" script and execut
  curl -H "Content-Type: application/json" -X POST -d '{"text":"Elon Musk has shown again he can influence the digital currency market with just his tweets. After saying that electric vehicle-making company Tesla will not accept payments in Bitcoin because of environmental concerns, he tweeted that he was working with developers of Dogecoin to improve system transaction efficiency.", "min_length": 15, "max_length": 75}' http://0.0.0.0:<cont_port>/api/get-summary
 ```
 
-<br/>
 Caveats: 
-<br/>
-1. There is a limitation to the length of the values that curl can take. This is dependent on the OS. Had issues providing longer texts for summarization. Need to find a solution to solve this. <br/>
-2. The code detects if the GPU is present or not and sets the device value accordingly. So, the same code can be run on both CPU/GPU. <br/>
+
+1. There is a limitation to the length of the values that curl can take. This is dependent on the OS. Had issues providing longer texts for summarization. Need to find a solution to solve this.
+
+2. The code detects if the GPU is present or not and sets the device value accordingly. So, the same code can be run on both CPU/GPU.
+
 3. The model is currently part of the container image. So, the image size is 3.35 GB. If this needs to be avoided, the model can be mounted during runtime. To do so, follow the steps,
 
-- Add "model" to the .dockerignore file
-```python
-# Ignore the files/folders
-.git
-*cache*
-*model*
-.dockerignore
-Dockerfile
-```
+  - Add "model" to the .dockerignore file
+  ```python
+  # Ignore the files/folders
+  .git
+  *cache*
+  *model*
+  .dockerignore
+  Dockerfile
+  ```
 
-- Remove/Comment out the following line from Dockerfile
-```python
-  # COPY model/distilbart-cnn-12-6 /Summarizer/distilbart-cnn-12-6
-```
-- Create docker image as specified earlier
-- Create container using the following command,
-```python 
+  - Remove/Comment out the following line from Dockerfile
+  ```python
+    # COPY model/distilbart-cnn-12-6 /Summarizer/distilbart-cnn-12-6
+  ```
+  - Create docker image as specified earlier
+  - Create container using the following command,
+  ```python 
   docker run -it -p <cont_port>:<host_port> --name <cont_name> -v $HOME/HFServing/model/distilbart-cnn-12-6:/Summarizer/distilbart-cnn-12-6 <image_name>
 ```
