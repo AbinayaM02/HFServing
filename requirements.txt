@@ -1,6 +1,6 @@
-transformers
+transformers==4.9.0
 flask
 flask_restful
-torch
-gunicorn
-docker
+torch==1.9.0
+gunicorn==20.1.0
+docker==5.0.0
