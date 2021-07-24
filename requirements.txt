@@ -1,4 +1,6 @@
-transformers==4.9.0
+transformers
 flask
+flask_restful
+torch
 gunicorn
 docker

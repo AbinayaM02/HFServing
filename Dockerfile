@@ -21,7 +21,8 @@ RUN pip install -r requirements.txt && \
 # Copy only the necessary folders/files
 COPY config.py /Summarizer/.
 COPY summarization.py /Summarizer/.
-COPY model /Summarizer/.
+RUN mkdir distilbart-cnn-12-6
+COPY model/distilbart-cnn-12-6 /Summarizer/distilbart-cnn-12-6
 
 # Specify the command
 CMD ["gunicorn", "-c", "/Summarizer/config.py", "summarization:app"]

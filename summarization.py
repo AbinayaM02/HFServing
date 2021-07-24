@@ -3,6 +3,8 @@
 """
 
 # Imports
+import torch
+import os
 from transformers.pipelines import pipeline
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from flask import Flask, request
@@ -14,10 +16,15 @@ api = Api(app)
 class Summarizer():
 
     def __init__(self, data, min_len = 75, max_len = 150):
-        self.model_path = "model/distilbart-cnn-12-6"
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(self.model_path)
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
-        self.summarizer = pipeline('summarization', model=self.model, tokenizer=self.tokenizer)
+        self.model_path = os.path.join(os.getcwd() + "/distilbart-cnn-12-6/")
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(self.model_path,
+                                                        local_files_only=True)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_path,
+                                                    local_files_only=True)
+        self.summarizer = pipeline('summarization', 
+                                    model=self.model,
+                                    tokenizer=self.tokenizer,
+                                    device=0 if torch.cuda.is_available is True else -1)
         self.data = data
         self.min_len = min_len
         self.max_len = max_len
